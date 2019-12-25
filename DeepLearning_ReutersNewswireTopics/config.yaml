@@ -1,0 +1,56 @@
+data:
+  dataset: {name: reuters, samples: 11228, type: public}
+  datasetLoadOption: batch
+  kfold: 1
+  mapping:
+    Class:
+      options: {}
+      port: OutputPort0
+      shape: ''
+      type: Categorical
+    Topic:
+      options: {Normalization: false, Scaling: 1}
+      port: InputPort0
+      shape: ''
+      type: Array
+  numPorts: 1
+  samples: {split: 0, test: '228', training: '10000', validation: '1000'}
+  shuffle: false
+model:
+  connections:
+  - {source: Input_1, target: Dense_1}
+  - {source: Dense_2, target: Output_1}
+  - {source: Dropout_1, target: Dense_2}
+  - {source: Dense_1, target: Dropout_1}
+  layers:
+  - args: {}
+    class: Input
+    name: Input_1
+    x: 183
+    y: 38
+  - args: {}
+    class: Output
+    name: Output_1
+    x: 191
+    y: 575
+  - args: {activation: relu, output_dim: '512'}
+    class: Dense
+    name: Dense_1
+    x: 184
+    y: 185
+  - args: {p: '0.5'}
+    class: Dropout
+    name: Dropout_1
+    x: 191
+    y: 319
+  - args: {activation: softmax, output_dim: '46'}
+    class: Dense
+    name: Dense_2
+    x: 197
+    y: 444
+params:
+  batch_size: '32'
+  loss_func: categorical_crossentropy
+  num_epoch: '5'
+  optimizer: {beta_1: 0.9, beta_2: 0.999, decay: 0, epsilon: 1e-08, lr: 0.001, name: Adam}
+project: Reuters Newswire Topics Classification
